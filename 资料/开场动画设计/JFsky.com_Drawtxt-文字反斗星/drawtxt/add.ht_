@@ -1,0 +1,39 @@
+<html><head><title>将作品提交到微风阁</title><meta http-equiv="Content-Type" content="text/html; charset=gb2312"><style type="text/css"><!--.sumit { background-color: #000000; overflow: visible; clip:  rect(   ); color: #FFCCCC; cursor: hand; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.input { color: #FFCCCC; background-color: #333333; border-color: black black #FFCCCC; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 1px; border-left-width: 0px}--></style></head><body text=#ccccff vLink=#ffcccc bgColor=#000000 link="#FFCCCC">
+<table width="400" border="0" align="center"><tr><td><div align="center"><a href="
+<<home_web>>
+default.asp"><font size="-1">看其它作品</font></a>  <font size="-1">
+<<home_web_title>>
+</font></div></td></tr>  </table><p align="center">您的作品如下</p><div align="center"><table width="
+<<max_wide>>
+" border="1" cellspacing="0" bgcolor="#
+<<backcolor>>
+" 
+bordercolorlight="#999999"><tr><td>
+<font style="color:#
+<<fontcolor>>
+">
+ 
+<<body_show>>
+</font></td></tr></table><form name="form1" method="post" action="
+<<home_web>>
+add.asp"><table border="0" width="450"><tr><td width="60"><div align="right"><font size="-1">作者：</font></div></td><td><input name="author" type="text" class="input" maxlength="20" size="20">* <input name="wide" type="hidden" value="
+<<tab_wide>>
+"><input name="high" type="hidden" value="
+<<tab_high>>
+"><input name="bgcolor" type="hidden" value="#
+<<backcolor>>
+">
+<input name="fontcolor" type="hidden" value="#
+<<fontcolor>>
+">
+<input name="work" type="hidden" value="
+<<body_hide>>
+"></td></tr><tr><td width="60"><div align="right"><font size="-1">主题：</font></div></td><td><input name="zt" type="text" size="40" maxlength="40" class="input">* </td></tr><tr><td width="60"><div align="right"><font size="-1">密码：</font></div></td><td><input name="mima" type="password" size="20" maxlength="20" class="input">* </td></tr>
+<tr><td width="60" height="2"></td><td height="2"><table width="100%" border="0"><tr><td><div align="center"><input type="submit" name="Submit" value="·提交·" class="sumit"></div></td><td><div align="left"><input type="reset" name="Submit2" value="·重填·" class="sumit"></div></td></tr></table></td></tr></table></form><br><font size="-1">说明：请在线提交.密码仅作为以后删除、修改作品用</font><br></div></html>
+<<end>>
+本文件的使用说明：
+本文件作为上传文字作品时的网页源文件，您可以用一般的网页编辑工具来编辑它，或建造一个自己的上传界面，只要将其中的一些参数用如上中的“<<>>”代替就行。但请注意务必要将其独立的作为一行，否则程序分辨不出来的（业余水平就是这样的了），另外“<<backcoloc>>”“<<fontcolor>>”等颜色的参数，除了要独立一行外，后一行还不能直接再接“<<...>>”的项。否则，会乱的。
+“<<body_show>>”是显示上传作品的实际效果。
+“<<body_hide>>”是显示上传作品在文字输入控件中的内容。
+“<<tab_wide>>”、“<<tab_high>>”“<<backcolor>>”“<<fontcolor>>”“<<home_web>>”都是顾名思义，不可缺少的几项，不要缺掉了。

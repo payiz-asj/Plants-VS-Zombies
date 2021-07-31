@@ -1,0 +1,1392 @@
+//裁判,规则
+void referee()
+{
+	//所有的植物
+	for (size_t i = 0; i < all_plants.size(); i++)
+	{
+		//获得一个植物，判断类型
+		if (all_plants[i]->get_type() == "远程植物")
+		{
+			//所有的远程植物
+			p_01 all_p01;
+			for (size_t p_i = 0; p_i < all_p01.get_num(); p_i++)
+			{
+				//获得一个远程攻击植物，判断子弹
+				if (all_p01.get_one_object(p_i)->get_bullet() == NULL)
+				{
+					//没有子弹,可能僵尸靠近，所有子弹消耗完了
+				}
+				else
+				{
+					//不同子弹对应不同的子弹类
+					switch (all_p01.get_one_object(p_i)->get_bullet_type())
+					{
+					case 0:
+					{
+						//所有豌豆子弹（其实是那个植物发出过且尚未消失的子弹的不同位置集合）
+						Peas all_peas;
+						for (size_t pp_i = 0; pp_i < all_peas.get_num(); pp_i++)
+						{
+							//终于获得一个豌豆子弹,接下来遍历所有僵尸，
+							//如果这个子弹遇到僵尸，将会直接消失，因为豌豆不会穿过僵尸
+							
+							int is_collide = 0;//是否碰撞
+							//所有僵尸
+							for (size_t j = 0; j < all_zombis.size(); j++)
+							{
+								//获得一个僵尸，判断类型
+								if (all_plants[i]->get_type() == "普通僵尸")
+								{
+									//所有普通僵尸
+									Ordinary all_ord;									
+									for (size_t z_j = 0; z_j < all_ord.get_num(); z_j++)
+									{
+										//获得一个普通僵尸，判断其工具
+										if (all_ord.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有工具,可能是纯正的普通僵尸，也有可能是工具消耗完了							
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_ord.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//这是真正的普通僵尸，上一步会过滤这个分支，所以这个分支永远进不来，嘿嘿
+												break;
+											}
+											case 1:
+											{
+												//所有读报僵尸
+												Newspaper all_news;
+												for (size_t zz_j = 0; zz_j < all_news.get_num(); zz_j++)
+												{
+													//终于获得一个读报僵尸，一个子弹遇到了一个僵尸
+													if (all_news.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_news.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 2:
+											{
+												//所有铁桶僵尸
+												Newspaper all_buck;
+												for (size_t zz_j = 0; zz_j < all_buck.get_num(); zz_j++)
+												{
+													//终于获得一个铁桶僵尸，一个子弹遇到了一个僵尸
+													if (all_buck.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_buck.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 3:
+											{
+												//所有铁扇门僵尸
+												Newspaper all_iron;
+												for (size_t zz_j = 0; zz_j < all_iron.get_num(); zz_j++)
+												{
+													//终于获得一个铁扇门僵尸，一个子弹遇到了一个僵尸
+													if (all_iron.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_iron.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 4:
+											{
+												//所有橄榄球僵尸
+												Newspaper all_rug;
+												for (size_t zz_j = 0; zz_j < all_rug.get_num(); zz_j++)
+												{
+													//终于获得一个橄榄球僵尸，一个子弹遇到了一个僵尸
+													if (all_rug.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_rug.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}											
+										}//所有的工具
+
+										// 终于获得一个普通僵尸
+										if (all_ord.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_ord.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有普通僵尸
+								}
+								else if (all_plants[i]->get_type() == "远程僵尸")
+								{
+									//所有远程僵尸
+									Z_01 all_z01;
+									for (size_t z_j = 0; z_j < all_z01.get_num(); z_j++)
+									{
+										//获得一个远程僵尸，判断其工具
+										if (all_z01.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z01.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个远程僵尸
+										if (all_z01.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z01.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有远程僵尸
+								}
+								else if (all_plants[i]->get_type() == "近程僵尸")
+								{
+									//所有近程僵尸
+									Z_01 all_z02;
+									for (size_t z_j = 0; z_j < all_z02.get_num(); z_j++)
+									{
+										//获得一个近程僵尸，判断其工具
+										if (all_z02.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z02.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有撑杆跳僵尸
+												Pole_Vaulting all_pol;
+												for (size_t zz_j = 0; zz_j < all_pol.get_num(); zz_j++)
+												{
+													//终于获得一个撑杆跳僵尸，一个子弹遇到了一个僵尸
+													if (all_pol.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_pol.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有化学家僵尸
+												Chemist all_chem;
+												for (size_t zz_j = 0; zz_j < all_chem.get_num(); zz_j++)
+												{
+													//终于获得一个化学家僵尸，一个子弹遇到了一个僵尸
+													if (all_chem.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_chem.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_z02.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z02.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有近程僵尸
+								}
+								else if (all_plants[i]->get_type() == "坤坤僵尸")
+								{
+									//所有坤坤僵尸
+									Kunkun all_kun;
+									for (size_t z_j = 0; z_j < all_kun.get_num(); z_j++)
+									{
+										//获得一个坤坤僵尸，判断其工具
+										if (all_kun.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_kun.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}											
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_kun.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_kun.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}
+									//所有坤坤僵尸
+								}
+								//所有僵尸
+							}
+							if (is_collide == 1)
+							{
+								//子弹碰到僵尸了，消除
+								all_peas.get_one_object(pp_i)->del_one_object(pp_i);
+							}
+							else
+							{
+								Lawn aaa;
+								for (size_t L_i = 0; L_i < aaa.get_num(); L_i++)
+								{
+									if (aaa.get_one_object(L_i).get_row() ==
+										all_peas.get_one_object(pp_i)->get_row() &&
+										aaa.get_one_object(L_i).get_col() ==
+										all_peas.get_one_object(pp_i)->get_col())
+									{
+										//找到当前草坪,添加植物攻击力S
+										aaa.get_one_object(L_i).add_p_at(all_peas.get_one_object(pp_i)->get_AT());
+									}
+								}
+							}												
+						}//所有普通豌豆
+						break;
+					}
+					case 1:
+					{
+						//所有雪花豌豆子弹（其实是那个植物发出过且尚未消失的子弹的不同位置集合）
+						Snow_peas all_peas;
+						for (size_t pp_i = 0; pp_i < all_peas.get_num(); pp_i++)
+						{
+							//终于获得一个豌豆子弹,接下来遍历所有僵尸，
+							//如果这个子弹遇到僵尸，将会直接消失，因为豌豆不会穿过僵尸
+
+							int is_collide = 0;//是否碰撞
+							//所有僵尸
+							for (size_t j = 0; j < all_zombis.size(); j++)
+							{
+								//获得一个僵尸，判断类型
+								if (all_plants[i]->get_type() == "普通僵尸")
+								{
+									//所有普通僵尸
+									Ordinary all_ord;
+									for (size_t z_j = 0; z_j < all_ord.get_num(); z_j++)
+									{
+										//获得一个普通僵尸，判断其工具
+										if (all_ord.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有工具,可能是纯正的普通僵尸，也有可能是工具消耗完了							
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_ord.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//这是真正的普通僵尸，上一步会过滤这个分支，所以这个分支永远进不来，嘿嘿
+												break;
+											}
+											case 1:
+											{
+												//所有读报僵尸
+												Newspaper all_news;
+												for (size_t zz_j = 0; zz_j < all_news.get_num(); zz_j++)
+												{
+													//终于获得一个读报僵尸，一个子弹遇到了一个僵尸
+													if (all_news.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_news.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 2:
+											{
+												//所有铁桶僵尸
+												Newspaper all_buck;
+												for (size_t zz_j = 0; zz_j < all_buck.get_num(); zz_j++)
+												{
+													//终于获得一个铁桶僵尸，一个子弹遇到了一个僵尸
+													if (all_buck.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_buck.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 3:
+											{
+												//所有铁扇门僵尸
+												Newspaper all_iron;
+												for (size_t zz_j = 0; zz_j < all_iron.get_num(); zz_j++)
+												{
+													//终于获得一个铁扇门僵尸，一个子弹遇到了一个僵尸
+													if (all_iron.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_iron.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 4:
+											{
+												//所有橄榄球僵尸
+												Newspaper all_rug;
+												for (size_t zz_j = 0; zz_j < all_rug.get_num(); zz_j++)
+												{
+													//终于获得一个橄榄球僵尸，一个子弹遇到了一个僵尸
+													if (all_rug.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_rug.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的工具
+
+										// 终于获得一个普通僵尸
+										if (all_ord.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_ord.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有普通僵尸
+								}
+								else if (all_plants[i]->get_type() == "远程僵尸")
+								{
+									//所有远程僵尸
+									Z_01 all_z01;
+									for (size_t z_j = 0; z_j < all_z01.get_num(); z_j++)
+									{
+										//获得一个远程僵尸，判断其工具
+										if (all_z01.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z01.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个远程僵尸
+										if (all_z01.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z01.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有远程僵尸
+								}
+								else if (all_plants[i]->get_type() == "近程僵尸")
+								{
+									//所有近程僵尸
+									Z_01 all_z02;
+									for (size_t z_j = 0; z_j < all_z02.get_num(); z_j++)
+									{
+										//获得一个近程僵尸，判断其工具
+										if (all_z02.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z02.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有撑杆跳僵尸
+												Pole_Vaulting all_pol;
+												for (size_t zz_j = 0; zz_j < all_pol.get_num(); zz_j++)
+												{
+													//终于获得一个撑杆跳僵尸，一个子弹遇到了一个僵尸
+													if (all_pol.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_pol.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有化学家僵尸
+												Chemist all_chem;
+												for (size_t zz_j = 0; zz_j < all_chem.get_num(); zz_j++)
+												{
+													//终于获得一个化学家僵尸，一个子弹遇到了一个僵尸
+													if (all_chem.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_chem.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_z02.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z02.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有近程僵尸
+								}
+								else if (all_plants[i]->get_type() == "坤坤僵尸")
+								{
+									//所有坤坤僵尸
+									Kunkun all_kun;
+									for (size_t z_j = 0; z_j < all_kun.get_num(); z_j++)
+									{
+										//获得一个坤坤僵尸，判断其工具
+										if (all_kun.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_kun.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_kun.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_kun.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}
+									//所有坤坤僵尸
+								}
+								//所有僵尸
+							}
+							if (is_collide == 1)
+							{
+								//子弹碰到僵尸了，消除
+								all_peas.get_one_object(pp_i)->del_one_object(pp_i);
+							}
+							else
+							{
+								Lawn aaa;
+								for (size_t L_i = 0; L_i < aaa.get_num(); L_i++)
+								{
+									if (aaa.get_one_object(L_i).get_row() ==
+										all_peas.get_one_object(pp_i)->get_row() &&
+										aaa.get_one_object(L_i).get_col() ==
+										all_peas.get_one_object(pp_i)->get_col())
+									{
+										//找到当前草坪,添加植物攻击力S
+										aaa.get_one_object(L_i).add_p_at(all_peas.get_one_object(pp_i)->get_AT());
+									}
+								}
+							}
+						}//所有普通豌豆
+						break;
+
+						//所有雪花豌豆
+					}
+					case 2:
+					{
+						//所有雪花豌豆子弹（其实是那个植物发出过且尚未消失的子弹的不同位置集合）
+						Melon all_peas;
+						for (size_t pp_i = 0; pp_i < all_peas.get_num(); pp_i++)
+						{
+							//终于获得一个豌豆子弹,接下来遍历所有僵尸，
+							//如果这个子弹遇到僵尸，将会直接消失，因为豌豆不会穿过僵尸
+
+							int is_collide = 0;//是否碰撞
+							//所有僵尸
+							for (size_t j = 0; j < all_zombis.size(); j++)
+							{
+								//获得一个僵尸，判断类型
+								if (all_plants[i]->get_type() == "普通僵尸")
+								{
+									//所有普通僵尸
+									Ordinary all_ord;
+									for (size_t z_j = 0; z_j < all_ord.get_num(); z_j++)
+									{
+										//获得一个普通僵尸，判断其工具
+										if (all_ord.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有工具,可能是纯正的普通僵尸，也有可能是工具消耗完了							
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_ord.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//这是真正的普通僵尸，上一步会过滤这个分支，所以这个分支永远进不来，嘿嘿
+												break;
+											}
+											case 1:
+											{
+												//所有读报僵尸
+												Newspaper all_news;
+												for (size_t zz_j = 0; zz_j < all_peas.get_num(); zz_j++)
+												{
+													//终于获得一个读报僵尸，一个子弹遇到了一个僵尸
+													if (all_news.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_news.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 2:
+											{
+												//所有铁桶僵尸
+												Newspaper all_buck;
+												for (size_t zz_j = 0; zz_j < all_peas.get_num(); zz_j++)
+												{
+													//终于获得一个铁桶僵尸，一个子弹遇到了一个僵尸
+													if (all_buck.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_buck.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 3:
+											{
+												//所有铁扇门僵尸
+												Newspaper all_iron;
+												for (size_t zz_j = 0; zz_j < all_peas.get_num(); zz_j++)
+												{
+													//终于获得一个铁扇门僵尸，一个子弹遇到了一个僵尸
+													if (all_iron.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_iron.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 4:
+											{
+												//所有橄榄球僵尸
+												Newspaper all_rug;
+												for (size_t zz_j = 0; zz_j < all_peas.get_num(); zz_j++)
+												{
+													//终于获得一个橄榄球僵尸，一个子弹遇到了一个僵尸
+													if (all_rug.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_rug.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的工具
+
+										// 终于获得一个普通僵尸
+										if (all_ord.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_ord.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有普通僵尸
+								}
+								else if (all_plants[i]->get_type() == "远程僵尸")
+								{
+									//所有远程僵尸
+									Z_01 all_z01;
+									for (size_t z_j = 0; z_j < all_z01.get_num(); z_j++)
+									{
+										//获得一个远程僵尸，判断其工具
+										if (all_z01.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z01.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个远程僵尸
+										if (all_z01.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z01.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有远程僵尸
+								}
+								else if (all_plants[i]->get_type() == "近程僵尸")
+								{
+									//所有近程僵尸
+									Z_01 all_z02;
+									for (size_t z_j = 0; z_j < all_z02.get_num(); z_j++)
+									{
+										//获得一个近程僵尸，判断其工具
+										if (all_z02.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_z02.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有撑杆跳僵尸
+												Pole_Vaulting all_pol;
+												for (size_t zz_j = 0; zz_j < all_pol.get_num(); zz_j++)
+												{
+													//终于获得一个撑杆跳僵尸，一个子弹遇到了一个僵尸
+													if (all_pol.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_pol.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											case 1:
+											{
+												//所有化学家僵尸
+												Chemist all_chem;
+												for (size_t zz_j = 0; zz_j < all_chem.get_num(); zz_j++)
+												{
+													//终于获得一个化学家僵尸，一个子弹遇到了一个僵尸
+													if (all_chem.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_chem.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_z02.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_z02.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}//所有近程僵尸
+								}
+								else if (all_plants[i]->get_type() == "坤坤僵尸")
+								{
+									//所有坤坤僵尸
+									Kunkun all_kun;
+									for (size_t z_j = 0; z_j < all_kun.get_num(); z_j++)
+									{
+										//获得一个坤坤僵尸，判断其工具
+										if (all_kun.get_one_object(z_j)->get_tool() == NULL)
+										{
+											//没有子弹了，可能靠近植物，或工具消耗完了											
+										}
+										else
+										{
+											//不同工具对应不同的工具类
+											switch (all_kun.get_one_object(z_j)->get_tool_type())
+											{
+											case 0:
+											{
+												//所有棒球僵尸
+												Baseball all_bas;
+												for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+												{
+													//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+													if (all_bas.get_one_object(zz_j)->get_row() ==
+														all_peas.get_one_object(pp_i)->get_row() &&
+														all_bas.get_one_object(zz_j)->get_col() ==
+														all_peas.get_one_object(pp_i)->get_col())
+													{
+														//一个子弹遇到了一个僵尸
+														is_collide = 1;
+													}
+												}
+												break;
+											}
+											default:
+												break;
+											}
+										}//所有的子弹
+
+										// 终于获得一个近程僵尸
+										if (all_kun.get_one_object(z_j)->get_row() ==
+											all_peas.get_one_object(pp_i)->get_row() &&
+											all_kun.get_one_object(z_j)->get_col() ==
+											all_peas.get_one_object(pp_i)->get_col())
+										{
+											//一个子弹遇到了一个僵尸
+											is_collide = 1;
+										}
+									}
+									//所有坤坤僵尸
+								}
+								//所有僵尸
+							}
+							if (is_collide == 1)
+							{
+								//子弹碰到僵尸了，消除
+								all_peas.get_one_object(pp_i)->del_one_object(pp_i);
+							}
+							else
+							{
+								Lawn aaa;
+								for (size_t L_i = 0; L_i < aaa.get_num(); L_i++)
+								{
+									if (aaa.get_one_object(L_i).get_row() ==
+										all_peas.get_one_object(pp_i)->get_row() &&
+										aaa.get_one_object(L_i).get_col() ==
+										all_peas.get_one_object(pp_i)->get_col())
+									{
+										//找到当前草坪,添加植物攻击力S
+										aaa.get_one_object(L_i).add_p_at(all_peas.get_one_object(pp_i)->get_AT());
+									}
+								}
+							}
+						}//所有普通豌豆
+						break;
+
+						//所有西瓜
+					}
+					default:
+					{
+						//远程植物其他种类的子弹
+						break;
+					}
+					//远程植物所有种类的子弹
+				}				
+			}
+			//所有远程植物结束
+		}	
+	}
+	else if (all_plants[i]->get_type() == "近程植物")
+	{
+		//所有的近程植物
+		p_02 all_p02;
+		for (size_t p_i = 0; p_i < all_p02.get_num(); p_i++)
+		{
+			int is_collide = 0;//是否碰撞
+			//所有僵尸
+			for (size_t j = 0; j < all_zombis.size(); j++)
+			{
+				//获得一个僵尸，判断类型
+				if (all_plants[i]->get_type() == "普通僵尸")
+				{
+					//所有普通僵尸
+					Ordinary all_ord;
+					for (size_t z_j = 0; z_j < all_ord.get_num(); z_j++)
+					{
+						//获得一个普通僵尸，判断其工具
+						if (all_ord.get_one_object(z_j)->get_tool() == NULL)
+						{
+							//没有工具,可能是纯正的普通僵尸，也有可能是工具消耗完了							
+						}
+						else
+						{
+							//不同工具对应不同的工具类
+							switch (all_ord.get_one_object(z_j)->get_tool_type())
+							{
+							case 0:
+							{
+								//这是真正的普通僵尸，上一步会过滤这个分支，所以这个分支永远进不来，嘿嘿
+								break;
+							}
+							case 1:
+							{
+								//所有读报僵尸
+								Newspaper all_news;
+								for (size_t zz_j = 0; zz_j < all_news.get_num(); zz_j++)
+								{
+									//终于获得一个读报僵尸，一个子弹遇到了一个僵尸
+									if (all_news.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row()&&
+										all_news.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col()+1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							case 2:
+							{
+								//所有铁桶僵尸
+								Newspaper all_buck;
+								for (size_t zz_j = 0; zz_j < all_buck.get_num(); zz_j++)
+								{
+									//终于获得一个铁桶僵尸，一个子弹遇到了一个僵尸
+									if (all_buck.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_buck.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col()+1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							case 3:
+							{
+								//所有铁扇门僵尸
+								Newspaper all_iron;
+								for (size_t zz_j = 0; zz_j < all_iron.get_num(); zz_j++)
+								{
+									//终于获得一个铁扇门僵尸，一个子弹遇到了一个僵尸
+									if (all_iron.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_iron.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col()+1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							case 4:
+							{
+								//所有橄榄球僵尸
+								Newspaper all_rug;
+								for (size_t zz_j = 0; zz_j < all_rug.get_num(); zz_j++)
+								{
+									//终于获得一个橄榄球僵尸，一个子弹遇到了一个僵尸
+									if (all_rug.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_rug.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col()+1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							default:
+								break;
+							}
+						}//所有的工具
+
+						// 终于获得一个普通僵尸
+						if (all_ord.get_one_object(z_j)->get_row() ==
+							all_p02.get_one_object(p_i)->get_row() &&
+							all_ord.get_one_object(z_j)->get_col() ==
+							all_p02.get_one_object(p_i)->get_col()+1)
+						{
+							//一个子弹遇到了一个僵尸
+							is_collide = 1;
+						}
+					}//所有普通僵尸
+				}
+				else if (all_plants[i]->get_type() == "远程僵尸")
+				{
+					//所有远程僵尸
+					Z_01 all_z01;
+					for (size_t z_j = 0; z_j < all_z01.get_num(); z_j++)
+					{
+						//获得一个远程僵尸，判断其工具
+						if (all_z01.get_one_object(z_j)->get_tool() == NULL)
+						{
+							//没有子弹了，可能靠近植物，或工具消耗完了											
+						}
+						else
+						{
+							//不同工具对应不同的工具类
+							switch (all_z01.get_one_object(z_j)->get_tool_type())
+							{
+							case 0:
+							{
+								//所有棒球僵尸
+								Baseball all_bas;
+								for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+								{
+									//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+									if (all_bas.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_bas.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col() + 1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							case 1:
+							{
+								//所有棒球僵尸
+								Baseball all_bas;
+								for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+								{
+									//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+									if (all_bas.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_bas.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col() + 1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+
+							default:
+								break;
+							}
+						}//所有的子弹
+
+						// 终于获得一个远程僵尸
+						if (all_z01.get_one_object(z_j)->get_row() ==
+							all_p02.get_one_object(p_i)->get_row() &&
+							all_z01.get_one_object(z_j)->get_col() ==
+							all_p02.get_one_object(p_i)->get_col()+1)
+						{
+							//一个子弹遇到了一个僵尸
+							is_collide = 1;
+						}
+					}//所有远程僵尸
+				}
+				else if (all_plants[i]->get_type() == "近程僵尸")
+				{
+					//所有近程僵尸
+					Z_01 all_z02;
+					for (size_t z_j = 0; z_j < all_z02.get_num(); z_j++)
+					{
+						//获得一个近程僵尸，判断其工具
+						if (all_z02.get_one_object(z_j)->get_tool() == NULL)
+						{
+							//没有子弹了，可能靠近植物，或工具消耗完了											
+						}
+						else
+						{
+							//不同工具对应不同的工具类
+							switch (all_z02.get_one_object(z_j)->get_tool_type())
+							{
+							case 0:
+							{
+								//所有撑杆跳僵尸
+								Pole_Vaulting all_pol;
+								for (size_t zz_j = 0; zz_j < all_pol.get_num(); zz_j++)
+								{
+									//终于获得一个撑杆跳僵尸，一个子弹遇到了一个僵尸
+									if (all_pol.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_pol.get_one_object(z_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col() + 1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							case 1:
+							{
+								//所有化学家僵尸
+								Chemist all_chem;
+								for (size_t zz_j = 0; zz_j < all_chem.get_num(); zz_j++)
+								{
+									//终于获得一个化学家僵尸，一个子弹遇到了一个僵尸
+									if (all_chem.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_chem.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col()+1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							default:
+								break;
+							}
+						}//所有的子弹
+
+						// 终于获得一个近程僵尸
+						if (all_z02.get_one_object(z_j)->get_row() ==
+							all_p02.get_one_object(p_i)->get_row() &&
+							all_z02.get_one_object(z_j)->get_col() ==
+							all_p02.get_one_object(p_i)->get_col()+1)
+						{
+							//一个子弹遇到了一个僵尸
+							is_collide = 1;
+						}
+					}//所有近程僵尸
+				}
+				else if (all_plants[i]->get_type() == "坤坤僵尸")
+				{
+					//所有坤坤僵尸
+					Kunkun all_kun;
+					for (size_t z_j = 0; z_j < all_kun.get_num(); z_j++)
+					{
+						//获得一个坤坤僵尸，判断其工具
+						if (all_kun.get_one_object(z_j)->get_tool() == NULL)
+						{
+							//没有子弹了，可能靠近植物，或工具消耗完了											
+						}
+						else
+						{
+							//不同工具对应不同的工具类
+							switch (all_kun.get_one_object(z_j)->get_tool_type())
+							{
+							case 0:
+							{
+								//所有棒球僵尸
+								Baseball all_bas;
+								for (size_t zz_j = 0; zz_j < all_bas.get_num(); zz_j++)
+								{
+									//终于获得一个棒球僵尸，一个子弹遇到了一个僵尸
+									if (all_bas.get_one_object(zz_j)->get_row() ==
+										all_p02.get_one_object(p_i)->get_row() &&
+										all_bas.get_one_object(zz_j)->get_col() ==
+										all_p02.get_one_object(p_i)->get_col() + 1)
+									{
+										//一个子弹遇到了一个僵尸
+										is_collide = 1;
+									}
+								}
+								break;
+							}
+							default:
+								break;
+							}
+						}//所有的子弹
+
+						// 终于获得一个近程僵尸
+						if (all_kun.get_one_object(z_j)->get_row() ==
+							all_p02.get_one_object(p_i)->get_row() &&
+							all_kun.get_one_object(z_j)->get_col() ==
+							all_p02.get_one_object(p_i)->get_col()+1)
+						{
+							//一个子弹遇到了一个僵尸
+							is_collide = 1;
+						}
+					}
+					//所有坤坤僵尸
+				}
+				//所有僵尸
+			}
+			if (is_collide == 1)
+			{
+				//子弹碰到僵尸了，消除
+				all_p02.get_one_object(p_i)->del_one_object(p_i);
+			}
+			else
+			{
+				Lawn aaa;
+				for (size_t L_i = 0; L_i < aaa.get_num(); L_i++)
+				{
+					if (aaa.get_one_object(L_i).get_row() ==
+						all_p02.get_one_object(p_i)->get_row() &&
+						aaa.get_one_object(L_i).get_col()+1 ==
+						all_p02.get_one_object(p_i)->get_col()+1)
+					{
+						//找到当前草坪,添加植物攻击力S
+						aaa.get_one_object(L_i).add_p_at(all_p02.get_one_object(p_i)->get_AT());
+					}
+				}
+			}
+		}//所有窝瓜
+	}
+	else
+	{
+		//所有的经济型植物
+		
+	}
+	}
+
+//该所有的僵尸了
+
+
+
+
+
+}
